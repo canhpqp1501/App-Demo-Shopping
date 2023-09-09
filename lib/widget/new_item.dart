@@ -1,10 +1,11 @@
-// ignore_for_file: unused_local_variable, non_constant_identifier_names, unused_field
+// ignore_for_file: unused_local_variable, non_constant_identifier_names, unused_field, use_build_context_synchronously
+
+import 'dart:convert';
 
 import 'package:demo_pass_data/data/data.dart';
 import 'package:demo_pass_data/model/category.dart';
-import 'package:demo_pass_data/model/grocery_Item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -17,15 +18,31 @@ class _NewItemState extends State<NewItem> {
   final _fromKey = GlobalKey<FormState>();
   var _enterName = '';
   var _soLuong = 1;
-  var _selectedCategory = categories[Categories.vegetables]!;
-  void _saveItem() {
+  var _selectedCategory = categories[Categories.milk]!;
+  // tạo tên, số lượng, sản phẩm để thêm vào màn grocety,
+  
+  void _saveItem() async {
     if (_fromKey.currentState!.validate()) {
       _fromKey.currentState!.save();
-      Navigator.of(context).pop(GroceryItem(
-          id: DateTime.now().toString(),
-          name: _enterName,
-          quantity: _soLuong,
-          category: _selectedCategory));
+      final url = Uri.https(
+          'fir-app-shopping-default-rtdb.firebaseio.com', 'shopping-list.json');
+          // tạo url 
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(
+          {
+            'name': _enterName,
+            'soLuong': _soLuong,
+            'category': _selectedCategory.title,
+          },
+        ),
+        // dùng http.post để gửi dữ liệu lên firebase
+      );
+      
+      
+
+      Navigator.of(context).pop();
     }
   }
 
@@ -91,6 +108,7 @@ class _NewItemState extends State<NewItem> {
                         },
                         onSaved: (Value) {
                           _soLuong = int.parse(Value!);
+                          // đổi kiểu số lượng về kiểu int
                         },
                         initialValue: _soLuong.toString(),
                       ),

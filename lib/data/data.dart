@@ -5,7 +5,7 @@ import 'dart:ui';
 import '../model/category.dart';
 
 const categories = {
-  Categories.vegetables: Category(
+  Categories.milk: Category(
     'Vegetables',
     Color.fromARGB(255, 0, 255, 128),
   ),

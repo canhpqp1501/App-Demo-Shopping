@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:demo_pass_data/data/data.dart';
 import 'package:demo_pass_data/model/grocery_Item.dart';
 import 'package:demo_pass_data/widget/new_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class GrocetyList extends StatefulWidget {
   const GrocetyList({super.key});
@@ -11,19 +15,55 @@ class GrocetyList extends StatefulWidget {
 }
 
 class _GrocetyListState extends State<GrocetyList> {
-  final List<GroceryItem> _groceryItem = [];
+  List<GroceryItem> _groceryItem = [];
+  // tạo _groceryItem để thêm dữ liệu vào màn hình
+  @override
+  void initState() {
+    super.initState();
+    _loadItem();
+  }
+
+  void _loadItem() async {
+    final url = Uri.https(
+        'fir-app-shopping-default-rtdb.firebaseio.com', 'shopping-list.json');
+    final response = await http.get(url);
+    //dùng http.get để lấy giữ liệu từ firebase về
+    final Map<String, dynamic> listData = json.decode(response.body);
+    // tạo listdata 
+    final List<GroceryItem> _loadItems = [];
+    // tạo 1 list  _loadItems trống
+    for (final item in listData.entries) {
+      final category = categories.entries
+          .firstWhere(
+              (catItem) => catItem.value.title == item.value['category'])
+          .value;
+      _loadItems.add(GroceryItem(
+          id: item.key,
+          name: item.value['name'],
+          quantity: item.value['soLuong'],
+          category: category));
+    }// dùng for in để duyệt qua phần tử trong listdata, dùng firstWhere để tìm phần tử đầu tiên,
+    
+    setState(() {
+      _groceryItem = _loadItems;
+    });
+  }
+  // add giữ liệu từ firebase trả màn hình về sau khi dc mã hóa 
+
   void _addItem() async {
-    final newItem = await Navigator.of(context).push<GroceryItem>(
+    await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(
         builder: (ctx) => NewItem(),
       ),
     );
-    if (newItem == null) {
-      return;
-    }
-    setState(() {
-      _groceryItem.add(newItem);
-    });
+    _loadItem();
+    // if (newItem == null) {
+    //   return;
+    // }
+    // setState(() {
+    //   _groceryItem.add(newItem);
+    // });
+    //thêm 1 id mới vào danh sách
   }
 
   void _removedItem(GroceryItem item) {
@@ -36,7 +76,7 @@ class _GrocetyListState extends State<GrocetyList> {
   @override
   Widget build(BuildContext context) {
     Widget content = const Center(
-      child: Text("No items added yet"),
+      child: Text("Chưa có sản phẩm nào được thêm "),
     );
     if (_groceryItem.isNotEmpty) {
       content = ListView.builder(
