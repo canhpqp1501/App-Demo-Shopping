@@ -18,29 +18,36 @@ class _NewItemState extends State<NewItem> {
   final _fromKey = GlobalKey<FormState>();
   var _enterName = '';
   var _soLuong = 1;
+  // var _addNew = 0;
+  final today = DateTime.now();
   var _selectedCategory = categories[Categories.milk]!;
   // tạo tên, số lượng, sản phẩm để thêm vào màn grocety,
-  
+
   void _saveItem() async {
     if (_fromKey.currentState!.validate()) {
       _fromKey.currentState!.save();
       final url = Uri.https(
           'fir-app-shopping-default-rtdb.firebaseio.com', 'shopping-list.json');
-          // tạo url 
+      // tạo url
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
+
         body: json.encode(
           {
             'name': _enterName,
             'soLuong': _soLuong,
+            // 'addNew': _addNew,
             'category': _selectedCategory.title,
           },
         ),
         // dùng http.post để gửi dữ liệu lên firebase
       );
-      
-      
+      // if (response.statusCode == 200) {
+      //   print('ok');
+      // } else {
+      //   print('error');
+      // }
 
       Navigator.of(context).pop();
     }
@@ -86,6 +93,32 @@ class _NewItemState extends State<NewItem> {
                   // value khi dc người dùng nhập.
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: TextFormField(
+              //     maxLength: 50,
+              //     decoration: InputDecoration(
+              //       label: const Text('new '),
+              //       border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(20)),
+              //     ),
+              //     validator: (Value) {
+              //       if (Value == null ||
+              //           Value.isEmpty ||
+              //           Value.trim().length <= 1 ||
+              //           Value.trim().length >= 50) {
+              //         return 'Kí tự phải từ 1 đến 50 ';
+              //       }
+              //       return null;
+              //     },
+
+              //     // check value, nếu null, cso khoảng trắng, nhỏ hơn 1 hoặc lớn hơn 50 thì in ra lỗi 'Kí tự phải từ 1 đến 50 ';
+              //     onSaved: (value) {
+              //       _addNew = int.parse(value!);
+              //     },
+              //     // value khi dc người dùng nhập.
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -152,13 +185,22 @@ class _NewItemState extends State<NewItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: _reset, child: Text('Đặt lại')),
+                  TextButton(onPressed: _reset, child: const Text('Đặt lại')),
                   ElevatedButton(
                     onPressed: _saveItem,
-                    child: Text('Lưu lại'),
+                    child: const Text('Lưu lại'),
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("${today}"),
+                ],
+              ),
             ],
           )),
     );

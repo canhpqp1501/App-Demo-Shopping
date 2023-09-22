@@ -1,20 +1,18 @@
-
-
 import 'dart:ui';
 
 import '../model/category.dart';
 
 const categories = {
+  
+  
   Categories.milk: Category(
     'Vegetables',
     Color.fromARGB(255, 0, 255, 128),
   ),
-
   Categories.fruit: Category(
     'Fruit',
     Color.fromARGB(255, 145, 255, 0),
   ),
-  
   Categories.meat: Category(
     'Meat',
     Color.fromARGB(255, 255, 102, 0),
@@ -47,5 +45,4 @@ const categories = {
     'Other',
     Color.fromARGB(255, 0, 225, 255),
   ),
-  
 };
