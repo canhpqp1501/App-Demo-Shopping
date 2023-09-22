@@ -198,7 +198,7 @@ class _NewItemState extends State<NewItem> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("giờ hiện tại là: ${today}"),
+                  Text("giờ hiện tại: ${today}"),
                 ],
               ),
             ],
