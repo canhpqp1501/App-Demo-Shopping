@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:demo_pass_data/data/data.dart';
 import 'package:demo_pass_data/model/category.dart';
+import 'package:demo_pass_data/widget/home_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,7 +50,8 @@ class _NewItemState extends State<NewItem> {
       //   print('error');
       // }
 
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) =>const HomeList()));
     }
   }
 
@@ -63,6 +65,12 @@ class _NewItemState extends State<NewItem> {
       appBar: AppBar(
         title: const Text('Add 1 item mới'),
       ),
+      // bottomNavigationBar: BottomNavigationBar(items: const [
+      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
+      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
+      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
+      // ]),
+
       body: Form(
           key: _fromKey,
           child: Column(
@@ -192,13 +200,13 @@ class _NewItemState extends State<NewItem> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text("giờ hiện tại là: ${today}"),
+                  Text("giờ hiện tại là: $today"),
                 ],
               ),
             ],
