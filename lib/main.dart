@@ -1,4 +1,4 @@
-import 'package:demo_pass_data/view/login.dart';
+import 'package:demo_pass_data/view/welcome_Screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: const Color(0xFFFfffff),
         ),
-        home: const LoginShopping());
+        home: const WelcomeShopping());
   }
 }
