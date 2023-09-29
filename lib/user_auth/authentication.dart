@@ -1,0 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+class Auth {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  User? get currentUser => _firebaseAuth.currentUser;
+  Stream<User?> get authenStateChanes => _firebaseAuth.authStateChanges();
+  loginWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  siginWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
+  logOut() async {
+    await _firebaseAuth.signOut();
+  }
+}

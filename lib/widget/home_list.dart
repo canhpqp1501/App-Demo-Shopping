@@ -50,7 +50,6 @@ class _HomeListState extends State<HomeList> {
   }
   // add giữ liệu từ firebase trả màn hình về sau khi dc mã hóa
 
-
   void _removedItem(GroceryItem item) {
     final url = Uri.https('fir-app-shopping-default-rtdb.firebaseio.com',
         'shopping-list/${item.id}.json');
@@ -59,9 +58,10 @@ class _HomeListState extends State<HomeList> {
       _groceryItem.remove(item);
     });
   }
+
   @override
   Widget build(BuildContext context) {
-     Widget content = const Center(
+    Widget content = const Center(
       child: Text("Chưa có sản phẩm nào được thêm "),
     );
     if (_isLoading) {
@@ -95,7 +95,12 @@ class _HomeListState extends State<HomeList> {
               ));
     }
     return Scaffold(
-      body: content,
+      body: WillPopScope(
+        child: content,
+        onWillPop: () async {
+          return false;
+        },
+      ),
     );
   }
 }

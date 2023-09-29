@@ -1,3 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:demo_pass_data/user_auth/authentication.dart';
+import 'package:demo_pass_data/view/sigin.dart';
+import 'package:demo_pass_data/widget/grocety_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,14 +14,35 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final userNameController = TextEditingController();
-  final passWordController = TextEditingController();
+  final Auth _auth = Auth();
+  final _emailController = TextEditingController();
+  final _passWordController = TextEditingController();
   String? userwordError;
   String? passwordError;
+  bool isChesk = false;
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passWordController.dispose();
+    super.dispose();
+  }
+
+  void loginHandle() async {
+    String email = _emailController.text;
+    String pass = _passWordController.text;
+
+    User? userlogin =
+        await _auth.loginWithEmailAndPassword(email: email, password: pass);
+    if (userlogin == null) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const GrocetyList()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(children: [
@@ -106,7 +133,8 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               padding: const EdgeInsets.only(left: 18, right: 18),
               child: TextField(
-                controller: userNameController,
+                style: const TextStyle(color: Color(0xff000000)),
+                controller: _emailController,
                 onChanged: (value) {},
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -118,12 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   filled: true,
-                  fillColor: const Color.fromARGB(255, 192, 203, 249),
+                  fillColor: const Color(0xffF2F3F7),
                   hintText: 'Nhập Email',
                   hintStyle: const TextStyle(color: Color(0xFFA1A4B2)),
                   suffixIcon: IconButton(
                       onPressed: () {
-                        userNameController.clear();
+                        _emailController.clear();
                       },
                       icon: const Icon(Icons.clear)),
                   border: OutlineInputBorder(
@@ -143,8 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               padding: const EdgeInsets.only(left: 18, right: 18),
               child: TextField(
-                controller: passWordController,
+                style: const TextStyle(color: Color(0xff000000)),
+                controller: _passWordController,
                 onChanged: (value) {},
+                obscureText: !isChesk,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon: const Padding(
@@ -155,14 +185,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   filled: true,
-                  fillColor: const Color.fromARGB(255, 192, 203, 249),
+                  fillColor: const Color(0xffF2F3F7),
                   hintText: 'Nhập password ',
                   hintStyle: const TextStyle(color: Color(0xFFA1A4B2)),
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        passWordController.clear();
-                      },
-                      icon: const Icon(Icons.clear)),
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isChesk = !isChesk;
+                      });
+                    },
+                    child: Icon(
+                      isChesk ? Icons.visibility_off : Icons.visibility,
+                    ),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: passwordError != null
@@ -184,7 +219,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF8E97FD)),
-                onPressed: () {},
+                onPressed: () {
+                  loginHandle();
+                },
                 child: const Text(
                   'ĐĂNG NHẬP',
                   style: TextStyle(
@@ -216,7 +253,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xFFA1A4B2))),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SiginShopping(),
+                      ));
+                    },
                     child: const Text(
                       "Đăng Kí",
                       style: TextStyle(

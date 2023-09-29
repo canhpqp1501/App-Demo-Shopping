@@ -121,11 +121,13 @@ class _GrocetyListState extends State<GrocetyList> {
     //           ));
     // }
     return Scaffold(
+      backgroundColor: const Color(0xff3F414E),
       appBar: AppBar(
+        backgroundColor: const Color(0xff3F414E),
         title: const Text('Shopping'),
-        actions: [
-          IconButton(icon: const Icon(Icons.add), onPressed: () {}),
-        ],
+        // actions: [
+        //   IconButton(icon: const Icon(Icons.add), onPressed: () {}),
+        // ],
         centerTitle: true,
       ),
       bottomNavigationBar: GNav(
@@ -135,24 +137,25 @@ class _GrocetyListState extends State<GrocetyList> {
               _selePageIndex = index;
             });
           },
-          color: const Color.fromARGB(255, 201, 161, 254),
-          // tabBackgroundGradient: state.themeData.primaryGradient,
-          // ignore: use_full_hex_values_for_flutter_colors
-          tabBackgroundColor: const Color(0xff0FFF1E6FF),
+          color: const Color(0xFFffffff),
+          tabBackgroundColor: const Color(0xFF8E97FD),
           gap: 8,
           padding: const EdgeInsets.all(18),
           activeColor: Colors.black54,
           tabs: const [
             GButton(
+              textColor: Color(0xffffffff),
               icon: Icons.home,
               text: 'Trang chủ',
             ),
             GButton(
               icon: Icons.add,
+              textColor: Color(0xffffffff),
               text: 'Thêm sản phẩm',
             ),
             GButton(
               icon: Icons.settings,
+              textColor: Color(0xffffffff),
               text: 'Cài đặt',
             ),
           ]),

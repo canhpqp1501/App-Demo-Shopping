@@ -51,7 +51,7 @@ class _NewItemState extends State<NewItem> {
       // }
 
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) =>const HomeList()));
+          .push(MaterialPageRoute(builder: (context) => const HomeList()));
     }
   }
 
@@ -62,15 +62,12 @@ class _NewItemState extends State<NewItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      backgroundColor:const Color(0xff3F414E),
       appBar: AppBar(
+        backgroundColor:const Color(0xff3F414E),
         title: const Text('Add 1 item mới'),
       ),
-      // bottomNavigationBar: BottomNavigationBar(items: const [
-      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
-      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
-      //   BottomNavigationBarItem(icon: Icon(Icons.home)),
-      // ]),
-
       body: Form(
           key: _fromKey,
           child: Column(

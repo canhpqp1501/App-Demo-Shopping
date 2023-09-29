@@ -1,8 +1,7 @@
-
-
 // ignore_for_file: file_names
 
 import 'package:demo_pass_data/view/login.dart';
+import 'package:demo_pass_data/view/sigin.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeShopping extends StatefulWidget {
@@ -16,6 +15,7 @@ class _WelcomeShoppingState extends State<WelcomeShopping> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(children: [
         Column(
           children: [
@@ -46,7 +46,10 @@ class _WelcomeShoppingState extends State<WelcomeShopping> {
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF8E97FD)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SiginShopping()));
+                },
                 child: const Text(
                   'ĐĂNG KÍ',
                   style: TextStyle(
