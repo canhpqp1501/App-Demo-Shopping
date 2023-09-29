@@ -62,12 +62,11 @@ class _NewItemState extends State<NewItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      backgroundColor:const Color(0xff3F414E),
-      appBar: AppBar(
-        backgroundColor:const Color(0xff3F414E),
-        title: const Text('Add 1 item mới'),
-      ),
+      backgroundColor: const Color(0xff3F414E),
+      // appBar: AppBar(
+      //   backgroundColor:const Color(0xff3F414E),
+      //   title: const Text('Add 1 item mới'),
+      // ),
       body: Form(
           key: _fromKey,
           child: Column(

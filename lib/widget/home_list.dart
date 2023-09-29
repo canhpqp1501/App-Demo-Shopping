@@ -58,6 +58,7 @@ class _HomeListState extends State<HomeList> {
       _groceryItem.remove(item);
     });
   }
+  // xóa danh sách trên firebase của list shopping
 
   @override
   Widget build(BuildContext context) {
@@ -71,34 +72,36 @@ class _HomeListState extends State<HomeList> {
     }
     if (_groceryItem.isNotEmpty) {
       content = ListView.builder(
-          // itemCount: groceryItems.length,
-          itemCount: _groceryItem.length,
-          itemBuilder: (ctx, index) => Dismissible(
-                key: ValueKey(_groceryItem[index].id),
-                onDismissed: (direction) {
-                  _removedItem(_groceryItem[index]);
-                },
-                child: ListTile(
-                  title: Text(
-                    _groceryItem[index].name.toUpperCase(),
-                  ),
-                  leading: Container(
-                    width: 30,
-                    height: 30,
-                    color: _groceryItem[index].category.color,
-                  ),
-                  trailing: Text(
-                    _groceryItem[index].quantity.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                ),
-              ));
+        // itemCount: groceryItems.length,
+        itemCount: _groceryItem.length,
+
+        itemBuilder: (ctx, index) => Dismissible(
+          key: ValueKey(_groceryItem[index].id),
+          onDismissed: (direction) {
+            _removedItem(_groceryItem[index]);
+          },
+          child: ListTile(
+            title: Text(
+              _groceryItem[index].name.toUpperCase(),
+            ),
+            leading: Container(
+              width: 30,
+              height: 30,
+              color: _groceryItem[index].category.color,
+            ),
+            trailing: Text(
+              _groceryItem[index].quantity.toString(),
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
     }
     return Scaffold(
       body: WillPopScope(
         child: content,
         onWillPop: () async {
-          return false;
+          return true;
         },
       ),
     );
