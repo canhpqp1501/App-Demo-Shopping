@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:demo_pass_data/view/login.dart';
-import 'package:demo_pass_data/view/sigin.dart';
+import 'package:demo_pass_data/view/sigup.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeShopping extends StatefulWidget {
@@ -48,7 +48,7 @@ class _WelcomeShoppingState extends State<WelcomeShopping> {
                     backgroundColor: const Color(0xFF8E97FD)),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SiginShopping()));
+                      builder: (context) => const SigUpShopping()));
                 },
                 child: const Text(
                   'ĐĂNG KÍ',

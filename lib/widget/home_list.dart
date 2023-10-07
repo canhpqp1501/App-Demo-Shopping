@@ -67,7 +67,9 @@ class _HomeListState extends State<HomeList> {
     );
     if (_isLoading) {
       content = const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Color(0xFF8E97FD),
+        ),
       );
     }
     if (_groceryItem.isNotEmpty) {

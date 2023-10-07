@@ -5,14 +5,14 @@ import 'package:demo_pass_data/widget/grocety_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SiginShopping extends StatefulWidget {
-  const SiginShopping({super.key});
+class SigUpShopping extends StatefulWidget {
+  const SigUpShopping({super.key});
 
   @override
-  State<SiginShopping> createState() => _SiginShoppingState();
+  State<SigUpShopping> createState() => _SigUpShoppingState();
 }
 
-class _SiginShoppingState extends State<SiginShopping> {
+class _SigUpShoppingState extends State<SigUpShopping> {
   final Auth _auth = Auth();
   final _emailNameController = TextEditingController();
   final _userNameController = TextEditingController();
@@ -29,9 +29,9 @@ class _SiginShoppingState extends State<SiginShopping> {
   }
 
   void sigUpHandle() async {
-    String email = _emailNameController.text;
-    String userName = _userNameController.text;
-    String pass = _passWordController.text;
+    String email = _emailNameController.text.trim();
+    String userName = _userNameController.text.trim();
+    String pass = _passWordController.text.trim();
 
     User? user =
         await _auth.siginWithEmailAndPassword(email: email, password: pass);
