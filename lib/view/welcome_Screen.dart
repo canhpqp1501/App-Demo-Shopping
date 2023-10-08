@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:demo_pass_data/view/login.dart';
-import 'package:demo_pass_data/view/sigup.dart';
+import 'package:demo_shopping/view/login.dart';
+import 'package:demo_shopping/view/sigup.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeShopping extends StatefulWidget {

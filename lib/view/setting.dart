@@ -1,4 +1,4 @@
-import 'package:demo_pass_data/user_auth/authentication.dart';
+import 'package:demo_shopping/user_auth/authentication.dart';
 import 'package:flutter/material.dart';
 
 class Setting extends StatefulWidget {

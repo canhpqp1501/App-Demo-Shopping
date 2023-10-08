@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:demo_pass_data/data/data.dart';
-import 'package:demo_pass_data/model/category.dart';
-import 'package:demo_pass_data/widget/home_list.dart';
+import 'package:demo_shopping/data/data.dart';
+import 'package:demo_shopping/model/category.dart';
+import 'package:demo_shopping/widget/home_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

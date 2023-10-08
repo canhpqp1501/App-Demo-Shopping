@@ -1,4 +1,4 @@
-import 'package:demo_pass_data/view/welcome_Screen.dart';
+import 'package:demo_shopping/view/welcome_Screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashCreen extends StatefulWidget {

@@ -1,11 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:demo_pass_data/view/setting.dart';
-import 'package:demo_pass_data/widget/home_list.dart';
+
+import 'package:demo_shopping/view/setting.dart';
+import 'package:demo_shopping/widget/home_list.dart';
+import 'package:demo_shopping/widget/new_item.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import 'package:demo_pass_data/widget/new_item.dart';
+
 
 class GrocetyList extends StatefulWidget {
   const GrocetyList({
