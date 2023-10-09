@@ -1,11 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
-
-import 'package:demo_shopping/user_auth/authentication.dart';
-import 'package:demo_shopping/view/sigup.dart';
-import 'package:demo_shopping/widget/grocety_list.dart';
+import 'package:demo_pass_data/user_auth/authentication.dart';
+import 'package:demo_pass_data/view/sigup.dart';
+import 'package:demo_pass_data/widget/grocety_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +21,18 @@ class _LoginScreenState extends State<LoginScreen> {
   String? userwordError;
   String? passwordError;
   bool isChesk = false;
+  SharedPreferences? prefs;
+  @override
+  void initState() {
+    sharedPreferences();
+    super.initState();
+  }
+
+  void sharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    // print(loginData);
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -33,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text,
       password: _passWordController.text,
     );
+    await prefs?.setString("loginData", _emailController.text);
+
     // showw dialog
 
     showDialog(

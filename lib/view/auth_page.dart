@@ -1,6 +1,6 @@
 
-import 'package:demo_shopping/view/login.dart';
-import 'package:demo_shopping/widget/grocety_list.dart';
+import 'package:demo_pass_data/view/login.dart';
+import 'package:demo_pass_data/widget/grocety_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

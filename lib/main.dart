@@ -1,4 +1,5 @@
-import 'package:demo_shopping/view/splash.dart';
+
+import 'package:demo_pass_data/view/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
