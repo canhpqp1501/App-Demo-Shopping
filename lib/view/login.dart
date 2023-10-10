@@ -77,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+    //
     // await Auth().loginWithEmailAndPassword(
     //     email: _emailController.text.trim(),
     //     password: _passWordController.text.trim());
