@@ -1,31 +1,32 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names
 
 import 'package:demo_pass_data/view/setting.dart';
 import 'package:demo_pass_data/widget/home_list.dart';
 import 'package:demo_pass_data/widget/new_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-
-
-class GrocetyList extends StatefulWidget {
-  const GrocetyList({
+class HomeMain extends StatefulWidget {
+  const HomeMain({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<GrocetyList> createState() => _GrocetyListState();
+  State<HomeMain> createState() => _HomeMainState();
 }
 
-class _GrocetyListState extends State<GrocetyList> {
+class _HomeMainState extends State<HomeMain> {
   int _selePageIndex = 0;
-  static const List<Widget> _widgetOption = <Widget>[
+  static const List<Widget> _menu_nav_bar = <Widget>[
     Center(child: HomeList()),
     Center(child: NewItem()),
-    Center(child: Setting()),
+    Center(child: SettingScreen()),
   ];
+  void logout() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,14 @@ class _GrocetyListState extends State<GrocetyList> {
           automaticallyImplyLeading: false,
           backgroundColor: const Color(0xff3F414E),
           title: const Text('Shopping'),
+          actions: [
+            IconButton(
+              onPressed: logout,
+              icon: const Icon(
+                Icons.logout,
+              ),
+            )
+          ],
           centerTitle: true,
         ),
         bottomNavigationBar: GNav(
@@ -68,7 +77,7 @@ class _GrocetyListState extends State<GrocetyList> {
                 text: 'Cài đặt',
               ),
             ]),
-        body: _widgetOption.elementAt(_selePageIndex),
+        body: _menu_nav_bar.elementAt(_selePageIndex),
       ),
     );
   }

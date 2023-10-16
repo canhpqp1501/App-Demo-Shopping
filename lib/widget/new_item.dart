@@ -54,6 +54,7 @@ class _NewItemState extends State<NewItem> {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const HomeList()));
     }
+    // sứa, chuyển vào hommain xem chạy thử k??
   }
 
   void _reset() {

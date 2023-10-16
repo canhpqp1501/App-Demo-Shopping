@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'package:demo_pass_data/view/login.dart';
-import 'package:demo_pass_data/view/sigup.dart';
 
 import 'package:flutter/material.dart';
 
@@ -48,8 +46,7 @@ class _WelcomeShoppingState extends State<WelcomeShopping> {
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF8E97FD)),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SigUpShopping()));
+                  Navigator.pushNamed(context, "/sigup");
                 },
                 child: const Text(
                   'ĐĂNG KÍ',
@@ -75,10 +72,7 @@ class _WelcomeShoppingState extends State<WelcomeShopping> {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()));
+                      Navigator.pushNamed(context, "/login");
                     },
                     child: const Text(
                       "Đăng Nhập",
