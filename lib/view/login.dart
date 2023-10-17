@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:demo_pass_data/user_auth/authentication.dart';
-import 'package:demo_pass_data/view/sigup.dart';
-import 'package:demo_pass_data/widget/grocety_list.dart';
+import 'package:demo_pass_data/widget/home_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+    //
     // await Auth().loginWithEmailAndPassword(
     //     email: _emailController.text.trim(),
     //     password: _passWordController.text.trim());
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await _auth.loginWithEmailAndPassword(email: email, password: pass);
     if (userlogin == null) {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const GrocetyList()));
+          .push(MaterialPageRoute(builder: (context) => const HomeMain()));
     }
   }
 
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       body: WillPopScope(
         onWillPop: () async {
-          return true;
+          return false;
         },
         child: Center(
           child: SingleChildScrollView(
@@ -335,9 +335,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Color(0xFFA1A4B2))),
                   TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SigUpShopping(),
-                        ));
+                        Navigator.pushNamed(
+                          context,
+                          "/sigup",
+                        );
                       },
                       child: const Text(
                         "Đăng Kí",

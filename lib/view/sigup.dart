@@ -1,11 +1,10 @@
-// ignore_for_file: unused_local_variable, use_build_context_synchronously
+// ignore_for_file: unused_local_variable, use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:demo_pass_data/user_auth/authentication.dart';
-import 'package:demo_pass_data/widget/grocety_list.dart';
-
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigUpShopping extends StatefulWidget {
   const SigUpShopping({super.key});
@@ -22,12 +21,18 @@ class _SigUpShoppingState extends State<SigUpShopping> {
   bool isChesk = false;
   String? userwordError;
   String? passwordError;
+  SharedPreferences? Prefs;
+
   @override
   void dispose() {
     _emailNameController.dispose();
     _userNameController.dispose();
     _passWordController.dispose();
     super.dispose();
+  }
+
+  void sharedPreferences() async {
+    Prefs = await SharedPreferences.getInstance();
   }
 
   void sigUpHandle() async {
@@ -38,10 +43,10 @@ class _SigUpShoppingState extends State<SigUpShopping> {
     User? user =
         await _auth.siginWithEmailAndPassword(email: email, password: pass);
     if (user == null) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const GrocetyList()));
+      Navigator.pushNamed(context, "/home");
     }
   }
+  // cho vào màn widget_tree để test
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,7 @@ class _SigUpShoppingState extends State<SigUpShopping> {
                     Navigator.pop(context);
                   });
                 },
+                // cmt lại pop
               ),
             ),
             const Center(

@@ -22,7 +22,7 @@ class _HomeMainState extends State<HomeMain> {
   static const List<Widget> _menu_nav_bar = <Widget>[
     Center(child: HomeList()),
     Center(child: NewItem()),
-    Center(child: Setting()),
+    Center(child: SettingScreen()),
   ];
   void logout() {
     FirebaseAuth.instance.signOut();
@@ -39,7 +39,12 @@ class _HomeMainState extends State<HomeMain> {
           backgroundColor: const Color(0xff3F414E),
           title: const Text('Shopping'),
           actions: [
-            IconButton(onPressed: logout, icon: const Icon(Icons.logout))
+            IconButton(
+              onPressed: logout,
+              icon: const Icon(
+                Icons.logout,
+              ),
+            )
           ],
           centerTitle: true,
         ),

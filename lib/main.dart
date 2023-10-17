@@ -1,4 +1,4 @@
-
+import 'package:demo_pass_data/router/app_router.dart';
 import 'package:demo_pass_data/view/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        initialRoute: AppRouterName.splash,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        // truyền từ appRouter qua
         debugShowCheckedModeBanner: false,
         title: 'Flutter Shopping',
         theme: ThemeData.dark().copyWith(
