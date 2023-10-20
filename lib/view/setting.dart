@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -10,7 +11,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isLoading = true;
-  // final user = FirebaseAuth.instance.currentUser!;
+  final User? currentUser = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {

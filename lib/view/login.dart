@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:demo_pass_data/user_auth/authentication.dart';
-import 'package:demo_pass_data/widget/home_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,19 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginHandle() async {
-    
     try {
       User? userlogin = await _auth.loginWithEmailAndPassword(
         email: _emailController.text,
         password: _passWordController.text,
       );
-      await Auth().loginWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passWordController.text,
-      );
       if (userlogin == null) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomeMain()));
+        Navigator.pushNamed(context, "/home");
       }
     } catch (e) {
       if (_emailController.text.isNotEmpty &&
@@ -100,20 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
         passError = null;
       });
     }
-
-    //
-
-    //xử lý lỗi
-
-    // String email = _emailController.text.trim();
-    // String pass = _passWordController.text.trim();
-
-    // User? userlogin =
-    //     await _auth.loginWithEmailAndPassword(email: email, password: pass);
-    // if (userlogin == null) {
-    //   Navigator.of(context)
-    //       .push(MaterialPageRoute(builder: (context) => const HomeMain()));
-    // }
   }
 
   @override
@@ -308,7 +287,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: const Color(0xFF8E97FD)),
                   onPressed: () {
                     loginHandle();
-                    //
                   },
                   child: const Text(
                     'ĐĂNG NHẬP',

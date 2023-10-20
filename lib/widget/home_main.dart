@@ -26,7 +26,7 @@ class _HomeMainState extends State<HomeMain> {
   ];
   void logoutt() {
     FirebaseAuth.instance.signOut().then((value) {
-      print('logout ok');
+      
       Navigator.pushNamed(context, "/login");
     });
   }
