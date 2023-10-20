@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, camel_case_types
 
-import 'package:demo_pass_data/user_auth/authentication.dart';
+
 import 'package:demo_pass_data/view/welcome_Screen.dart';
 import 'package:demo_pass_data/widget/home_main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 class widgetTree extends StatelessWidget {
@@ -18,7 +20,7 @@ class widgetTree extends StatelessWidget {
           return const WelcomeShopping();
         }
       },
-      stream: Auth().authenStateChanes,
+      stream: FirebaseAuth.instance.authStateChanges(),
     );
   }
 }

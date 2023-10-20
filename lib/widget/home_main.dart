@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names, avoid_print
 
 import 'package:demo_pass_data/view/setting.dart';
 import 'package:demo_pass_data/widget/home_list.dart';
@@ -24,8 +24,11 @@ class _HomeMainState extends State<HomeMain> {
     Center(child: NewItem()),
     Center(child: SettingScreen()),
   ];
-  void logout() {
-    FirebaseAuth.instance.signOut();
+  void logoutt() {
+    FirebaseAuth.instance.signOut().then((value) {
+      print('logout ok');
+      Navigator.pushNamed(context, "/login");
+    });
   }
 
   @override
@@ -40,7 +43,9 @@ class _HomeMainState extends State<HomeMain> {
           title: const Text('Shopping'),
           actions: [
             IconButton(
-              onPressed: logout,
+              onPressed: () {
+                logoutt();
+              },
               icon: const Icon(
                 Icons.logout,
               ),

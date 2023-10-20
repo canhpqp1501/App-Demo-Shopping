@@ -1,8 +1,9 @@
 // ignore_for_file: unused_local_variable, use_build_context_synchronously, non_constant_identifier_names
 
+import 'package:demo_pass_data/router/app_router.dart';
 import 'package:demo_pass_data/user_auth/authentication.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +20,8 @@ class _SigUpShoppingState extends State<SigUpShopping> {
   final _userNameController = TextEditingController();
   final _passWordController = TextEditingController();
   bool isChesk = false;
-  String? userwordError;
+  String? emailError;
+  String? nameError;
   String? passwordError;
   SharedPreferences? Prefs;
 
@@ -36,12 +38,29 @@ class _SigUpShoppingState extends State<SigUpShopping> {
   }
 
   void sigUpHandle() async {
+    if (_userNameController.text.isNotEmpty &&
+        _emailNameController.text.isNotEmpty &&
+        _passWordController.text.isNotEmpty) {
+      try {
+        await Auth().signUpWithEmailAndPassword(
+            email: _emailNameController.text.trim(),
+            password: _passWordController.text.trim());
+
+        if (mounted) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            AppRouterName.widget_Tree,
+            ModalRoute.withName(AppRouterName.widget_Tree),
+          );
+        }
+      // ignore: empty_catches
+      } catch (error) {}
+    }
+
     String email = _emailNameController.text.trim();
-    String userName = _userNameController.text.trim();
     String pass = _passWordController.text.trim();
 
     User? user =
-        await _auth.siginWithEmailAndPassword(email: email, password: pass);
+        await _auth.loginWithEmailAndPassword(email: email, password: pass);
     if (user == null) {
       Navigator.pushNamed(context, "/home");
     }
@@ -159,7 +178,11 @@ class _SigUpShoppingState extends State<SigUpShopping> {
               child: TextField(
                 style: const TextStyle(color: Color(0xff000000)),
                 controller: _userNameController,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    nameError = null;
+                  });
+                },
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon: const Padding(
@@ -180,7 +203,7 @@ class _SigUpShoppingState extends State<SigUpShopping> {
                       icon: const Icon(Icons.clear)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: userwordError != null
+                    borderSide: emailError != null
                         ? const BorderSide(
                             color: Color.fromARGB(255, 244, 244, 244),
                           )
@@ -197,7 +220,11 @@ class _SigUpShoppingState extends State<SigUpShopping> {
               child: TextField(
                 style: const TextStyle(color: Color(0xff000000)),
                 controller: _emailNameController,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    emailError = null;
+                  });
+                },
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   prefixIcon: const Padding(
@@ -218,7 +245,7 @@ class _SigUpShoppingState extends State<SigUpShopping> {
                       icon: const Icon(Icons.clear)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: userwordError != null
+                    borderSide: emailError != null
                         ? const BorderSide(
                             color: Color.fromARGB(255, 244, 244, 244),
                           )
@@ -235,7 +262,11 @@ class _SigUpShoppingState extends State<SigUpShopping> {
               child: TextField(
                 style: const TextStyle(color: Color(0xff000000)),
                 controller: _passWordController,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    passwordError = null;
+                  });
+                },
                 obscureText: !isChesk,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -283,6 +314,49 @@ class _SigUpShoppingState extends State<SigUpShopping> {
                     backgroundColor: const Color(0xFF8E97FD)),
                 onPressed: () {
                   sigUpHandle();
+                  if (_userNameController.text.isEmpty &&
+                      _emailNameController.text.isEmpty &&
+                      _passWordController.text.isEmpty) {
+                    setState(() {
+                      final snackbar = SnackBar(
+                        backgroundColor: const Color(0xffC70039),
+                        content: const Text(
+                          "Không được để trống",
+                          style: TextStyle(color: Color(0xffffffff)),
+                        ),
+                        action: SnackBarAction(
+                            label: "Thoát",
+                            textColor: const Color(0xffffffff),
+                            onPressed: () {}),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    });
+                  } else if (_userNameController.text == '' ||
+                      _emailNameController.text == '' ||
+                      _passWordController.text == '') {
+                    setState(() {
+                      final snackbar = SnackBar(
+                        backgroundColor: const Color(0xffC70039),
+                        content: const Text(
+                          "Không được để trống các ô còn lại",
+                          style: TextStyle(color: Color(0xffffffff)),
+                        ),
+                        action: SnackBarAction(
+                            label: "Thoát",
+                            textColor: const Color(0xffffffff),
+                            onPressed: () {
+                              ////
+                            }),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    });
+                  } else {
+                    setState(() {
+                      nameError = null;
+                      emailError = null;
+                      passwordError = null;
+                    });
+                  }
                 },
                 child: const Text(
                   'ĐĂNG KÍ',

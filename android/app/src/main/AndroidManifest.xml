@@ -1,6 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.example.demo_pass_data">
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
                          
     <application
         android:label="demo_pass_data"

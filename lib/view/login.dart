@@ -17,8 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = Auth();
   final _emailController = TextEditingController();
   final _passWordController = TextEditingController();
-  String? userwordError;
-  String? passwordError;
+  String? emailError;
+  String? passError;
   bool isChesk = false;
   SharedPreferences? prefs;
   @override
@@ -40,29 +40,48 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginHandle() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passWordController.text,
-    );
-    await prefs?.setString("loginData", _emailController.text);
+    
+    try {
+      User? userlogin = await _auth.loginWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passWordController.text,
+      );
+      await Auth().loginWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passWordController.text,
+      );
+      if (userlogin == null) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomeMain()));
+      }
+    } catch (e) {
+      if (_emailController.text.isNotEmpty &&
+          _passWordController.text.isNotEmpty) {
+        setState(() {
+          final snackbar = SnackBar(
+            backgroundColor: const Color(0xFF8E97FD),
+            content: const Text(
+              "Sai tài khoản hoặc mật khẩu",
+              style: TextStyle(color: Color(0xffffffff)),
+            ),
+            action: SnackBarAction(
+                label: "Thoát",
+                textColor: const Color(0xffffffff),
+                onPressed: () {}),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        });
+      } else {
+        setState(() {
+          emailError = null;
+          passError = null;
+        });
+      }
+    }
 
-    // showw dialog
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFF8E97FD),
-          ),
-        );
-      },
-    );
-
-    ///
     if (_emailController.text == "" || _passWordController.text == "") {
       final snackBar = SnackBar(
-        backgroundColor: const Color(0xffBC7AF9),
+        backgroundColor: const Color(0xFF8E97FD),
         content: const Text(
           "Vui lòng nhập email và password",
           style: TextStyle(color: Color(0xffffffff)),
@@ -75,23 +94,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      setState(() {
+        emailError = null;
+        passError = null;
+      });
     }
+
     //
-    // await Auth().loginWithEmailAndPassword(
-    //     email: _emailController.text.trim(),
-    //     password: _passWordController.text.trim());
 
-    /// xử lý lỗi
-    ///
-    String email = _emailController.text.trim();
-    String pass = _passWordController.text.trim();
+    //xử lý lỗi
 
-    User? userlogin =
-        await _auth.loginWithEmailAndPassword(email: email, password: pass);
-    if (userlogin == null) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomeMain()));
-    }
+    // String email = _emailController.text.trim();
+    // String pass = _passWordController.text.trim();
+
+    // User? userlogin =
+    //     await _auth.loginWithEmailAndPassword(email: email, password: pass);
+    // if (userlogin == null) {
+    //   Navigator.of(context)
+    //       .push(MaterialPageRoute(builder: (context) => const HomeMain()));
+    // }
   }
 
   @override
@@ -194,7 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   style: const TextStyle(color: Color(0xff000000)),
                   controller: _emailController,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    emailError = null;
+                  },
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     prefixIcon: const Padding(
@@ -208,6 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fillColor: const Color(0xffF2F3F7),
                     hintText: 'Nhập Email',
                     hintStyle: const TextStyle(color: Color(0xFFA1A4B2)),
+                    errorText: emailError,
                     suffixIcon: IconButton(
                         onPressed: () {
                           _emailController.clear();
@@ -215,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         icon: const Icon(Icons.clear)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: userwordError != null
+                      borderSide: emailError != null
                           ? const BorderSide(
                               color: Color.fromARGB(255, 244, 244, 244),
                             )
@@ -232,7 +257,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   style: const TextStyle(color: Color(0xff000000)),
                   controller: _passWordController,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    passError = null;
+                  },
                   obscureText: !isChesk,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -247,6 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fillColor: const Color(0xffF2F3F7),
                     hintText: 'Nhập password ',
                     hintStyle: const TextStyle(color: Color(0xFFA1A4B2)),
+                    errorText: passError,
                     suffixIcon: InkWell(
                       onTap: () {
                         setState(() {
@@ -259,7 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
-                      borderSide: passwordError != null
+                      borderSide: passError != null
                           ? const BorderSide(
                               color: Color.fromARGB(255, 244, 244, 244),
                             )
@@ -281,27 +309,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     loginHandle();
                     //
-                    //   if (_emailController.text.isNotEmpty &&
-                    //       _passWordController.text.isNotEmpty) {
-                    //     setState(() {
-                    //       final snackbar = SnackBar(
-                    //         backgroundColor: const Color(0xffBC7AF9),
-                    //         content: const Text(
-                    //           "Sai tài khoản hoặc mật khẩu",
-                    //         ),
-                    //         action: SnackBarAction(
-                    //             label: "Thoát",
-                    //             textColor: const Color(0xffffffff),
-                    //             onPressed: () {}),
-                    //       );
-                    //       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                    //     });
-                    //   } else {
-                    //     setState(() {
-                    //       userwordError = null;
-                    //       passwordError = null;
-                    //     });
-                    //   }
                   },
                   child: const Text(
                     'ĐĂNG NHẬP',

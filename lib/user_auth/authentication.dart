@@ -11,8 +11,14 @@ class Auth {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
   }
+  //  try {
+  //     await _firebaseAuth.signInWithEmailAndPassword(
+  //         email: email, password: password);
+  //   } catch (error) {
+  //     print('lỗi');
+  //   }
 
-  siginWithEmailAndPassword({
+  signUpWithEmailAndPassword({
     required String email,
     required String password,
   }) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -9,10 +10,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isLoading = true;
-  void logOutHandle() {
-    Navigator.pushNamed(context, "/login");
-    
-  }
+  // final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +18,8 @@ class _SettingScreenState extends State<SettingScreen> {
       body: Center(
         child: Column(
           children: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () {
-                logOutHandle();
-              },
-            )
+            Lottie.asset('assets/done.json', repeat: false),
+            // Text("H E L L O    ${user.email!}"),
           ],
         ),
       ),

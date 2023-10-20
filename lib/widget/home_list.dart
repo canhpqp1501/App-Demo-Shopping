@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:demo_pass_data/data/data.dart';
@@ -13,13 +15,24 @@ class HomeList extends StatefulWidget {
   State<HomeList> createState() => _HomeListState();
 }
 
-class _HomeListState extends State<HomeList> {
+class _HomeListState extends State<HomeList>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
   List<GroceryItem> _groceryItem = [];
   var _isLoading = true;
   // tạo _groceryItem để thêm dữ liệu vào màn hình
   @override
   void initState() {
     super.initState();
+    controller = AnimationController(
+      vsync: this,
+    );
+    controller.addStatusListener((status) async {
+      if (status == AnimationStatus.completed) {
+        Navigator.pop(context);
+        controller.reset();
+      }
+    });
     _loadItem();
   }
 
@@ -68,6 +81,15 @@ class _HomeListState extends State<HomeList> {
     );
     if (_isLoading) {
       content = const Center(
+        // child: Column(children: [
+        //   Lottie.asset('assets/done.json',
+        //       repeat: true,
+        //       reverse: true,
+        //       controller: controller, onLoaded: (Composition) {
+        //     controller.duration = Composition.duration;
+        //     controller.forward();
+        //   }),
+        // ]),
         child: CircularProgressIndicator(
           color: Color(0xFF8E97FD),
         ),

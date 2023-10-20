@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:demo_pass_data/data/data.dart';
 import 'package:demo_pass_data/model/category.dart';
-import 'package:demo_pass_data/widget/home_list.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -51,8 +50,7 @@ class _NewItemState extends State<NewItem> {
       //   print('error');
       // }
 
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomeList()));
+      Navigator.pushNamed(context, "/home");
     }
     // sứa, chuyển vào hommain xem chạy thử k??
   }
@@ -186,17 +184,20 @@ class _NewItemState extends State<NewItem> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(onPressed: _reset, child: const Text('Đặt lại')),
-                  ElevatedButton(
-                    onPressed: _saveItem,
-                    child: const Text('Lưu lại'),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(onPressed: _reset, child: const Text('Đặt lại')),
+                    ElevatedButton(
+                      onPressed: _saveItem,
+                      child: const Text('Lưu lại'),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,
